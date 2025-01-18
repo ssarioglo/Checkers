@@ -25,7 +25,7 @@ public:
     }
 
     // draws start board
-    int start_draw()
+    int start_draw() // Начальное положение отрисовки
     {
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         {
@@ -238,13 +238,13 @@ private:
     }
 
     // function that re-draw all the textures
-    void rerender()
+    void rerender() // функция прорисовки чего-либо
     {
-        // draw board
+        // Отрисовка доски
         SDL_RenderClear(ren);
         SDL_RenderCopy(ren, board, NULL, NULL);
 
-        // draw pieces
+        // Отрисовка клеток
         for (POS_T i = 0; i < 8; ++i)
         {
             for (POS_T j = 0; j < 8; ++j)
@@ -269,7 +269,7 @@ private:
             }
         }
 
-        // draw hilight
+        // отрисовка подсветки
         SDL_SetRenderDrawColor(ren, 0, 255, 0, 0);
         const double scale = 2.5;
         SDL_RenderSetScale(ren, scale, scale);
@@ -285,7 +285,7 @@ private:
             }
         }
 
-        // draw active
+        // Отрисовка активного игрока
         if (active_x != -1)
         {
             SDL_SetRenderDrawColor(ren, 255, 0, 0, 0);
@@ -295,14 +295,14 @@ private:
         }
         SDL_RenderSetScale(ren, 1, 1);
 
-        // draw arrows
-        SDL_Rect rect_left{ W / 40, H / 40, W / 15, H / 15 };
+        // Отрисовка стрелочек
+        SDL_Rect rect_left{ W / 40, H / 40, W / 15, H / 15 }; // W, H - размеры экрана
         SDL_RenderCopy(ren, back, NULL, &rect_left);
         SDL_Rect replay_rect{ W * 109 / 120, H / 40, W / 15, H / 15 };
         SDL_RenderCopy(ren, replay, NULL, &replay_rect);
 
-        // draw result
-        if (game_results != -1)
+        // Отрисовка финала игры
+        if (game_results != -1) 
         {
             string result_path = draw_path;
             if (game_results == 1)
@@ -336,13 +336,13 @@ private:
   public:
     int W = 0;
     int H = 0;
-    // history of boards
+    // История
     vector<vector<vector<POS_T>>> history_mtx;
 
   private:
     SDL_Window *win = nullptr;
     SDL_Renderer *ren = nullptr;
-    // textures
+    // Текстуры
     SDL_Texture *board = nullptr;
     SDL_Texture *w_piece = nullptr;
     SDL_Texture *b_piece = nullptr;
@@ -350,7 +350,7 @@ private:
     SDL_Texture *b_queen = nullptr;
     SDL_Texture *back = nullptr;
     SDL_Texture *replay = nullptr;
-    // texture files names
+    // Имена файлов текстур
     const string textures_path = project_path + "Textures/";
     const string board_path = textures_path + "board.png";
     const string piece_white_path = textures_path + "piece_white.png";
@@ -362,15 +362,15 @@ private:
     const string draw_path = textures_path + "draw.png";
     const string back_path = textures_path + "back.png";
     const string replay_path = textures_path + "replay.png";
-    // coordinates of chosen cell
+    // Координаты выбранной клетки
     int active_x = -1, active_y = -1;
-    // game result if exist
+    // Результат игры (если есть)
     int game_results = -1;
-    // matrix of possible moves
+    // Матрица возможных ходов
     vector<vector<bool>> is_highlighted_ = vector<vector<bool>>(8, vector<bool>(8, 0));
-    // matrix of possible moves
-    // 1 - white, 2 - black, 3 - white queen, 4 - black queen
+    // Матрица возможных ходов
+    // 1 - белые, 2 - черные, 3 - белая дама, 4 - черная дама
     vector<vector<POS_T>> mtx = vector<vector<POS_T>>(8, vector<POS_T>(8, 0));
-    // series of beats for each move
+    // Серия побитий для каждого хода
     vector<int> history_beat_series;
 };

@@ -5,6 +5,7 @@
 *.user
 log.txt
 .vs
+.vscode
 x64
 packages
 Debug
