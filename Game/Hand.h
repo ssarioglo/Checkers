@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <tuple>
 
 #include "../Models/Move.h"
@@ -12,7 +12,7 @@ class Hand
     Hand(Board *board) : board(board)
     {
     }
-    tuple<Response, POS_T, POS_T> get_cell() const // Метод который ожидает нажатие игрока на клетку и распознает, что это за нажатие. Возвращает Response
+    tuple<Response, POS_T, POS_T> get_cell() const // РњРµС‚РѕРґ РєРѕС‚РѕСЂС‹Р№ РѕР¶РёРґР°РµС‚ РЅР°Р¶Р°С‚РёРµ РёРіСЂРѕРєР° РЅР° РєР»РµС‚РєСѓ Рё СЂР°СЃРїРѕР·РЅР°РµС‚, С‡С‚Рѕ СЌС‚Рѕ Р·Р° РЅР°Р¶Р°С‚РёРµ. Р’РѕР·РІСЂР°С‰Р°РµС‚ Response
     {
         SDL_Event windowEvent;
         Response resp = Response::OK;
@@ -20,29 +20,29 @@ class Hand
         int xc = -1, yc = -1;
         while (true)
         {
-            if (SDL_PollEvent(&windowEvent)) // Цикл который ожидает клик по клетке
+            if (SDL_PollEvent(&windowEvent)) // Р¦РёРєР» РєРѕС‚РѕСЂС‹Р№ РѕР¶РёРґР°РµС‚ РєР»РёРє РїРѕ РєР»РµС‚РєРµ
             {
                 switch (windowEvent.type)
                 {
-                case SDL_QUIT: // Выход
+                case SDL_QUIT: // Р’С‹С…РѕРґ
                     resp = Response::QUIT;
                     break;
-                case SDL_MOUSEBUTTONDOWN: // Нажатие
+                case SDL_MOUSEBUTTONDOWN: // РќР°Р¶Р°С‚РёРµ
                     x = windowEvent.motion.x;
                     y = windowEvent.motion.y;
                     xc = int(y / (board->H / 10) - 1);
                     yc = int(x / (board->W / 10) - 1);
                     if (xc == -1 && yc == -1 && board->history_mtx.size() > 1)
                     {
-                        resp = Response::BACK; // кнопки Назад
+                        resp = Response::BACK; // РєРЅРѕРїРєРё РќР°Р·Р°Рґ
                     }
                     else if (xc == -1 && yc == 8)
                     {
-                        resp = Response::REPLAY; // Кнопки Повтор
+                        resp = Response::REPLAY; // РљРЅРѕРїРєРё РџРѕРІС‚РѕСЂ
                     }
                     else if (xc >= 0 && xc < 8 && yc >= 0 && yc < 8)
                     {
-                        resp = Response::CELL; // Клетки
+                        resp = Response::CELL; // РљР»РµС‚РєРё
                     }
                     else
                     {
@@ -50,7 +50,7 @@ class Hand
                         yc = -1;
                     }
                     break;
-                case SDL_WINDOWEVENT: // Изменение размера окна
+                case SDL_WINDOWEVENT: // РР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂР° РѕРєРЅР°
                     if (windowEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
                     {
                         board->reset_window_size();
@@ -61,10 +61,10 @@ class Hand
                     break;
             }
         }
-        return {resp, xc, yc}; // Возвращаем выполненный клик Responce с координатами клика (если их нет, то -1, -1)
+        return {resp, xc, yc}; // Р’РѕР·РІСЂР°С‰Р°РµРј РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ РєР»РёРє Responce СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё РєР»РёРєР° (РµСЃР»Рё РёС… РЅРµС‚, С‚Рѕ -1, -1)
     }
 
-    Response wait() const // метод ожидания нажатия закрыть или переиграть в конце игры
+    Response wait() const // РјРµС‚РѕРґ РѕР¶РёРґР°РЅРёСЏ РЅР°Р¶Р°С‚РёСЏ Р·Р°РєСЂС‹С‚СЊ РёР»Рё РїРµСЂРµРёРіСЂР°С‚СЊ РІ РєРѕРЅС†Рµ РёРіСЂС‹
     {
         SDL_Event windowEvent;
         Response resp = Response::OK;

@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <fstream>
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
@@ -13,15 +13,15 @@ class Config
         reload();
     }
 
-    void reload() // Функция загружает настройки из файла "settings.json" в переменную config
+    void reload() // Р¤СѓРЅРєС†РёСЏ Р·Р°РіСЂСѓР¶Р°РµС‚ РЅР°СЃС‚СЂРѕР№РєРё РёР· С„Р°Р№Р»Р° "settings.json" РІ РїРµСЂРµРјРµРЅРЅСѓСЋ config
     {
         std::ifstream fin(project_path + "settings.json");
         fin >> config;
         fin.close();
     }
 
-    auto operator()(const string &setting_dir, const string &setting_name) const  // Оператор получает получать из настроек нужную нам настройку,
-    {                                                                             // обратившись к разделу и подразделу настроек. Например "Bot", "NoRandom"
+    auto operator()(const string &setting_dir, const string &setting_name) const  // РћРїРµСЂР°С‚РѕСЂ РїРѕР»СѓС‡Р°РµС‚ РїРѕР»СѓС‡Р°С‚СЊ РёР· РЅР°СЃС‚СЂРѕРµРє РЅСѓР¶РЅСѓСЋ РЅР°Рј РЅР°СЃС‚СЂРѕР№РєСѓ,
+    {                                                                             // РѕР±СЂР°С‚РёРІС€РёСЃСЊ Рє СЂР°Р·РґРµР»Сѓ Рё РїРѕРґСЂР°Р·РґРµР»Сѓ РЅР°СЃС‚СЂРѕРµРє. РќР°РїСЂРёРјРµСЂ "Bot", "NoRandom"
         return config[setting_dir][setting_name];
     }
 

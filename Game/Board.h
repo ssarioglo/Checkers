@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -24,8 +24,8 @@ public:
     {
     }
 
-    // draws start board
-    int start_draw() // Начальное положение отрисовки
+    
+    int start_draw() // РќР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ РѕС‚СЂРёСЃРѕРІРєРё
     {
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         {
@@ -187,7 +187,7 @@ public:
         rerender();
     }
 
-    // use if window size changed
+    // РµСЃР»Рё СЂР°Р·РјРµСЂ РѕРєРЅР° РёР·РјРµРЅРёР»СЃСЏ
     void reset_window_size()
     {
         SDL_GetRendererOutputSize(ren, &W, &H);
@@ -220,7 +220,7 @@ private:
         history_mtx.push_back(mtx);
         history_beat_series.push_back(beat_series);
     }
-    // function to make start matrix
+    // С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РЅР°С‡Р°Р»СЊРЅРѕР№ РјР°С‚СЂРёС†С‹
     void make_start_mtx()
     {
         for (POS_T i = 0; i < 8; ++i)
@@ -237,14 +237,13 @@ private:
         add_history();
     }
 
-    // function that re-draw all the textures
-    void rerender() // функция прорисовки чего-либо
+    void rerender() // С„СѓРЅРєС†РёСЏ РїСЂРѕСЂРёСЃРѕРІРєРё С‡РµРіРѕ-Р»РёР±Рѕ
     {
-        // Отрисовка доски
+        // РћС‚СЂРёСЃРѕРІРєР° РґРѕСЃРєРё
         SDL_RenderClear(ren);
         SDL_RenderCopy(ren, board, NULL, NULL);
 
-        // Отрисовка клеток
+        // РћС‚СЂРёСЃРѕРІРєР° РєР»РµС‚РѕРє
         for (POS_T i = 0; i < 8; ++i)
         {
             for (POS_T j = 0; j < 8; ++j)
@@ -269,7 +268,7 @@ private:
             }
         }
 
-        // отрисовка подсветки
+        // РѕС‚СЂРёСЃРѕРІРєР° РїРѕРґСЃРІРµС‚РєРё
         SDL_SetRenderDrawColor(ren, 0, 255, 0, 0);
         const double scale = 2.5;
         SDL_RenderSetScale(ren, scale, scale);
@@ -285,7 +284,7 @@ private:
             }
         }
 
-        // Отрисовка активного игрока
+        // РћС‚СЂРёСЃРѕРІРєР° Р°РєС‚РёРІРЅРѕРіРѕ РёРіСЂРѕРєР°
         if (active_x != -1)
         {
             SDL_SetRenderDrawColor(ren, 255, 0, 0, 0);
@@ -295,13 +294,13 @@ private:
         }
         SDL_RenderSetScale(ren, 1, 1);
 
-        // Отрисовка стрелочек
-        SDL_Rect rect_left{ W / 40, H / 40, W / 15, H / 15 }; // W, H - размеры экрана
+        // РћС‚СЂРёСЃРѕРІРєР° СЃС‚СЂРµР»РѕС‡РµРє
+        SDL_Rect rect_left{ W / 40, H / 40, W / 15, H / 15 }; // W, H - СЂР°Р·РјРµСЂС‹ СЌРєСЂР°РЅР°
         SDL_RenderCopy(ren, back, NULL, &rect_left);
         SDL_Rect replay_rect{ W * 109 / 120, H / 40, W / 15, H / 15 };
         SDL_RenderCopy(ren, replay, NULL, &replay_rect);
 
-        // Отрисовка финала игры
+        // РћС‚СЂРёСЃРѕРІРєР° С„РёРЅР°Р»Р° РёРіСЂС‹
         if (game_results != -1) 
         {
             string result_path = draw_path;
@@ -336,13 +335,13 @@ private:
   public:
     int W = 0;
     int H = 0;
-    // История
+    // РСЃС‚РѕСЂРёСЏ
     vector<vector<vector<POS_T>>> history_mtx;
 
   private:
     SDL_Window *win = nullptr;
     SDL_Renderer *ren = nullptr;
-    // Текстуры
+    // РўРµРєСЃС‚СѓСЂС‹
     SDL_Texture *board = nullptr;
     SDL_Texture *w_piece = nullptr;
     SDL_Texture *b_piece = nullptr;
@@ -350,7 +349,7 @@ private:
     SDL_Texture *b_queen = nullptr;
     SDL_Texture *back = nullptr;
     SDL_Texture *replay = nullptr;
-    // Имена файлов текстур
+    // РРјРµРЅР° С„Р°Р№Р»РѕРІ С‚РµРєСЃС‚СѓСЂ
     const string textures_path = project_path + "Textures/";
     const string board_path = textures_path + "board.png";
     const string piece_white_path = textures_path + "piece_white.png";
@@ -362,15 +361,15 @@ private:
     const string draw_path = textures_path + "draw.png";
     const string back_path = textures_path + "back.png";
     const string replay_path = textures_path + "replay.png";
-    // Координаты выбранной клетки
+    // РљРѕРѕСЂРґРёРЅР°С‚С‹ РІС‹Р±СЂР°РЅРЅРѕР№ РєР»РµС‚РєРё
     int active_x = -1, active_y = -1;
-    // Результат игры (если есть)
+    // Р РµР·СѓР»СЊС‚Р°С‚ РёРіСЂС‹ (РµСЃР»Рё РµСЃС‚СЊ)
     int game_results = -1;
-    // Матрица возможных ходов
+    // РњР°С‚СЂРёС†Р° РІРѕР·РјРѕР¶РЅС‹С… С…РѕРґРѕРІ
     vector<vector<bool>> is_highlighted_ = vector<vector<bool>>(8, vector<bool>(8, 0));
-    // Матрица возможных ходов
-    // 1 - белые, 2 - черные, 3 - белая дама, 4 - черная дама
+    // РњР°С‚СЂРёС†Р° РІРѕР·РјРѕР¶РЅС‹С… С…РѕРґРѕРІ
+    // 1 - Р±РµР»С‹Рµ, 2 - С‡РµСЂРЅС‹Рµ, 3 - Р±РµР»Р°СЏ РґР°РјР°, 4 - С‡РµСЂРЅР°СЏ РґР°РјР°
     vector<vector<POS_T>> mtx = vector<vector<POS_T>>(8, vector<POS_T>(8, 0));
-    // Серия побитий для каждого хода
+    // РЎРµСЂРёСЏ РїРѕР±РёС‚РёР№ РґР»СЏ РєР°Р¶РґРѕРіРѕ С…РѕРґР°
     vector<int> history_beat_series;
 };
